@@ -1,0 +1,11 @@
+#ddev-generated
+ahoyapi: v2
+commands:
+  drush:uli:
+    usage: A fancier drush:uli for our own ahoy commands
+    cmd: .ddev/brooksdigital/platformsh/drush-uli.sh "$@"
+
+  db:pull:
+    usage: Pull database from master or specified environment. Defaults to 'master'.
+    cmd: .ddev/brooksdigital/platformsh/db-pull.sh "$@"
+

@@ -1,0 +1,6 @@
+ahoyapi: v2
+commands:
+  platform:
+    usage: List the common platform commands
+    imports:
+      - .ddev/brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml

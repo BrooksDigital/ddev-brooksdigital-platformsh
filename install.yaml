@@ -1,10 +1,15 @@
 name: brooksdigital-platformsh
 pre_install_actions:
 project_files:
+  - config.brooksdigital-platformsh.yaml
+  - brooksdigital/platformsh/db-pull.sh
+  - brooksdigital/platformsh/drush-uli.sh
+  - brooksdigital/platformsh/post-import-db.d/.gitkeep
+  - brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml
 global_files:
 dependencies:
 post_install_actions:
-- ddev get https://github.com/BrooksDigital/ddev-brooksdigital-base/tarball/main
-- ddev get https://github.com/hanoii/ddev-platformsh-lite/tarball/main
+  - ddev get https://github.com/BrooksDigital/ddev-brooksdigital-base/tarball/main
+  - ddev get https://github.com/hanoii/ddev-platformsh-lite/tarball/main
 removal_actions:
 yaml_read_files:

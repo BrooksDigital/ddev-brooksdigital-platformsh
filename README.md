@@ -15,5 +15,5 @@ This is our main ddev add-on to use on platform.sh projects, used to have an
 opinionated configuration for all of our projects.
 
 It also installs https://github.com/BrooksDigital/ddev-brooksdigital-base, which
-serves adds common elements for all of our projects and also includes setup/isntall
-documentation.
+serves adds common elements for all of our projects and also includes
+setup/isntall documentation.
