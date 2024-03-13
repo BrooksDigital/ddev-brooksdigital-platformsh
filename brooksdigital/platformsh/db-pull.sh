@@ -3,7 +3,8 @@
 
 set -e -o pipefail
 
-environment="-e ${DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH-master}"
+environment=${DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH-master}
+cmd_environment="-e $environment"
 download=true
 while getopts ":ne:" option; do
   case ${option} in
@@ -11,7 +12,8 @@ while getopts ":ne:" option; do
       download=
       ;;
     e)
-      environment="-e $OPTARG"
+      environment=$OPTARG
+      cmd_environment="-e $environment"
       ;;
     :)
       echo "Option -${OPTARG} requires an argument."
@@ -25,11 +27,11 @@ while getopts ":ne:" option; do
 done
 shift $((OPTIND-1))
 
-filename=dump-${1-$environment}.sql.gz
+filename=dump-$environment.sql.gz
 
 if [[ "$download" == "true"  ]]; then
-  echo "Dumping database on remote:/tmp/$filename..."
-  platform -y db:dump $environment --gzip --f $filename
+  echo "Fetching database to $filename..."
+  platform -y db:dump $cmd_environment --gzip -f $filename
 fi
 
 # Here we use the mysql database otherwise mysql alone will
@@ -38,8 +40,5 @@ mysql -uroot -proot -e 'DROP DATABASE IF EXISTS db' mysql
 mysql -uroot -proot -e 'CREATE DATABASE db' mysql
 pv $filename | gunzip | mysql
 
-drush cr -y
-drush updb -y
-drush cim -y
-
-ahoy drush:uli
+# Run all post-import-db scripts
+/var/www/html/.ddev/brooksdigital/base/hooks/post-import-db.sh

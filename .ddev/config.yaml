@@ -9,11 +9,12 @@ additional_fqdns: []
 database:
     type: mariadb
     version: "10.4"
-omit_containers: [db]
 use_dns_when_possible: true
 composer_version: "2"
 web_environment:
+    - DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH=master
     - PLATFORM_PROJECT=
+disable_upload_dirs_warning: true
 
 # Key features of DDEV's config.yaml:
 

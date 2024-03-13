@@ -1,10 +1,27 @@
 name: brooksdigital-platformsh
 pre_install_actions:
+  # Some of these actions taken from https://github.com/ddev/ddev-platformsh
+  # Get PLATFORM_PROJECT from user if we don't have it yet
+  - |
+    #ddev-nodisplay
+    # echo 'list ddevprojectconfig.web_environment={{ list .DdevProjectConfig.web_environment | toString }}'
+    if ({{ contains "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH=" (list .DdevProjectConfig.web_environment | toString) }} ); then
+      echo "Using existing DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH from project config.yaml."
+    else
+      printf "\n\nPlease enter your platform.sh production branch (like 'master' or 'main'): "
+    fi
+
+  - |
+    #ddev-description:Set DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH
+    if !( {{ contains "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH" (list .DdevProjectConfig.web_environment | toString) }} ); then
+      read platform_production
+      echo "platform_production = '${platform_production}'"
+      # Put the platform_project in to the project's web environment
+      ddev config --web-environment-add DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH=${platform_production}
+      echo "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH set to ${platform_production}"
+    fi
 project_files:
-  - config.brooksdigital-platformsh.yaml
   - brooksdigital/platformsh/db-pull.sh
-  - brooksdigital/platformsh/drush-uli.sh
-  - brooksdigital/platformsh/post-import-db.d/.gitkeep
   - brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml
 global_files:
 dependencies:
