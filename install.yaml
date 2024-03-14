@@ -1,9 +1,30 @@
 name: brooksdigital-platformsh
 pre_install_actions:
-  # Some of these actions taken from https://github.com/ddev/ddev-platformsh
+  # Some of these actions taken from https://github.com/hanoii/ddev-platformsh-lite
+  # We are doing it here as well, because otherwise the `ddev get` on the
+  # post_install_actions will not show the prompt and gets confusing.
+  # Workaround for https://github.com/ddev/ddev/issues/5968
+
   # Get PLATFORM_PROJECT from user if we don't have it yet
   - |
     # echo 'list ddevprojectconfig.web_environment={{ list .DdevProjectConfig.web_environment | toString }}'
+    if ({{ contains "PLATFORM_PROJECT=" (list .DdevProjectConfig.web_environment | toString) }} ); then
+      echo "Using existing PLATFORM_PROJECT from project config.yaml."
+    else
+      printf "\n\nPlease enter your platform.sh project ID (like '6k4ypl5iendqd'): "
+    fi
+
+  - |
+    #ddev-description:Set PLATFORM_PROJECT
+    if !( {{ contains "PLATFORM_PROJECT" (list .DdevProjectConfig.web_environment | toString) }} ); then
+      read platform_project
+      echo "platform_project = '${platform_project}'"
+      # Put the platform_project in to the project's web environment
+      ddev config --web-environment-add PLATFORM_PROJECT=${platform_project}
+      echo "PLATFORM_PROJECT set to ${platform_project}"
+    fi
+  # Get DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH from user if we don't have it yet
+  - |
     if ({{ contains "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH=" (list .DdevProjectConfig.web_environment | toString) }} ); then
       echo "Using existing DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH from project config.yaml."
     else
@@ -11,6 +32,7 @@ pre_install_actions:
     fi
 
   - |
+    #ddev-description:Set DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH
     if !( {{ contains "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH" (list .DdevProjectConfig.web_environment | toString) }} ); then
       read platform_production
       echo "platform_production = '${platform_production}'"
@@ -24,14 +46,6 @@ project_files:
 global_files:
 dependencies:
 post_install_actions:
-  - |
-    ##
-    ## This prompt is a also on hanoii/ddev-platformsh-lite, but we need to have it here
-    ## as a workaround for https://github.com/ddev/ddev/issues/5968
-    ###
-    if ! ({{ contains "PLATFORM_PROJECT=" (list .DdevProjectConfig.web_environment | toString) }} ); then
-      printf "\n\nPlease enter your platform.sh project ID (like '6k4ypl5iendqd'): "
-    fi
   - ddev get https://github.com/BrooksDigital/ddev-brooksdigital-base/tarball/main
   - ddev get https://github.com/hanoii/ddev-platformsh-lite/tarball/main
 removal_actions:
