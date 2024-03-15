@@ -42,6 +42,7 @@ pre_install_actions:
     fi
 project_files:
   - brooksdigital/platformsh/db-pull.sh
+  - brooksdigital/platformsh/push-log.sh
   - brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml
 global_files:
 dependencies:

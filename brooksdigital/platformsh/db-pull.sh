@@ -1,6 +1,5 @@
 #!/bin/bash
 #ddev-generated
-
 set -e -o pipefail
 
 USAGE=$(cat << EOM
