@@ -1,6 +1,10 @@
 #ddev-generated
 ahoyapi: v2
 commands:
+  push:log:
+    usage: See the latest push activity log
+    cmd: .ddev/brooksdigital/platformsh/push-log.sh "$@"
+
   db:pull:
-    usage: Pull database from master or specified environment. Defaults to 'master'.
+    usage: Pull database from master or specified environment. Defaults to '$DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH'.
     cmd: .ddev/brooksdigital/platformsh/db-pull.sh "$@"

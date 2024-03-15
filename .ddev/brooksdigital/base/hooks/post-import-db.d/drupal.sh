@@ -7,5 +7,5 @@ if [[ "$DDEV_PROJECT_TYPE" == *"drupal"* ]]; then
   drush updb -y
   drush cim -y
 
-  /var/www/html/.ddev/brooksdigital/base/drupal-drush-uli.sh
+  /var/www/html/.ddev/brooksdigital/base/scripts/drupal/drush-uli.sh
 fi
