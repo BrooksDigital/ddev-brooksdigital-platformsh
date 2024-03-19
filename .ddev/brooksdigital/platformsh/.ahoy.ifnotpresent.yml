@@ -1,0 +1,12 @@
+#ddev-generated
+ahoyapi: v2
+commands:
+  drupal:
+    usage: List the common platform commands
+    imports:
+      - .ddev/brooksdigital/base/.ahoy.brooksdigital-base.drupal.yml
+
+  platform:
+    usage: List the common platform commands
+    imports:
+      - .ddev/brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml

@@ -1,10 +1,11 @@
 name: brooksdigital-platformsh
 repository: .
 version: ""
-install_date: "2024-03-18T13:48:24-03:00"
+install_date: "2024-03-19T09:45:11-03:00"
 project_files:
     - brooksdigital/platformsh/db-pull.sh
     - brooksdigital/platformsh/push-log.sh
     - brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml
+    - brooksdigital/platformsh/.ahoy.ifnotpresent.yml
 global_files: []
 removal_actions: []

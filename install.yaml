@@ -44,9 +44,15 @@ project_files:
   - brooksdigital/platformsh/db-pull.sh
   - brooksdigital/platformsh/push-log.sh
   - brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml
+  - brooksdigital/platformsh/.ahoy.ifnotpresent.yml
 global_files:
 dependencies:
 post_install_actions:
+  - |
+    if [ ! -f ../.ahoy.yml ]; then
+      echo -e "\033[0;35m[note] .ahoy.yml not present, a default one using the add-on commands was added!\033[0m"
+      cp brooksdigital/platformsh/.ahoy.ifnotpresent.yml ../.ahoy.yml
+    fi
   - ddev get https://github.com/BrooksDigital/ddev-brooksdigital-base/tarball/main
   - ddev get https://github.com/hanoii/ddev-platformsh-lite/tarball/main
 removal_actions:
