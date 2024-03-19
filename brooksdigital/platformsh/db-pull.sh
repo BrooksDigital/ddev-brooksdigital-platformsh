@@ -4,7 +4,7 @@ set -e -o pipefail
 
 USAGE=$(cat << EOM
 
-Usage: $0 [options]
+Usage: ${DDEV_BROOKSDIGITAL_HELP_CMD-$0} [options]
 
   -h                This help text
   -e ENVIRONMENT    Use a different environment to download/import database

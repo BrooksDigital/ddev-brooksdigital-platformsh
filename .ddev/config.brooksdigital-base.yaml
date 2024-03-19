@@ -1,5 +1,5 @@
 #ddev-generated
-webimage_extra_packages: [boxes, build-essential, pv]
+webimage_extra_packages: [boxes, build-essential, kitty-terminfo, pv]
 hooks:
   post-import-db:
     - exec: /var/www/html/.ddev/brooksdigital/base/hooks/post-import-db.sh
