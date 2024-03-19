@@ -1,11 +1,18 @@
 ahoyapi: v2
 commands:
-  drupal:
-    usage: List the common platform commands
+  readme:
+    usage: 'README.md commands'
     imports:
-      - .ddev/brooksdigital/base/.ahoy.brooksdigital-base.drupal.yml
+      # addon needs to be installed locally on ddev with 'ddev get .'
+      - ./.ddev/readme/.ahoy.readme.yml
+
+  drupal:
+    usage: 'Drupal commands'
+    imports:
+      # addon needs to be installed locally on ddev with 'ddev get .'
+      - ./.ddev/brooksdigital/base/.ahoy.brooksdigital-base.drupal.yml
 
   platform:
-    usage: List the common platform commands
+    usage: 'Platform commands'
     imports:
       - .ddev/brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml
