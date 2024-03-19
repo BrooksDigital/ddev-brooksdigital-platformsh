@@ -1,7 +1,7 @@
 name: brooksdigital-base
 repository: https://github.com/BrooksDigital/ddev-brooksdigital-base/tarball/main
 version: ""
-install_date: "2024-03-19T09:49:26-03:00"
+install_date: "2024-03-19T09:54:28-03:00"
 project_files:
     - brooksdigital/base/hooks/post-import-db.sh
     - brooksdigital/base/hooks/post-import-db.d/.gitkeep

@@ -1,4 +1,5 @@
-#ddev-generated
+#ddev-generated - This file was copied by ddev-brooksdigital add-on
+# You can remove these lines if on your project root
 ahoyapi: v2
 commands:
   readme:
