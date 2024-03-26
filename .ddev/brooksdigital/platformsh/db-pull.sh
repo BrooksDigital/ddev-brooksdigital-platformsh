@@ -52,9 +52,9 @@ filename=dump-$environment.sql.gz
 if [[ "$download" == "true"  ]]; then
   echo "Fetching database to $filename..."
   if [[ "$DDEV_PROJECT_TYPE" == *"drupal"* ]] || [[ "$DDEV_BROOKSDIGITAL_PROJECT_TYPE" == *"drupal"* ]]; then
-    platform -y drush $cmd_environment -- sql-dump --gzip --structure-tables-list=${DDEV_BROOKSDIGITAL_PLATFORMSH_DRUSH_SQL_EXCLUDE-cache*,watchdog,search*} --gzip > $filename
+    platform -y drush ${DDEV_BROOKSDIGITAL_PLATFORMSH_DBPULL_EXTRA} $cmd_environment -- sql-dump --gzip --structure-tables-list=${DDEV_BROOKSDIGITAL_PLATFORMSH_DRUSH_SQL_EXCLUDE-cache*,watchdog,search*} --gzip > $filename
   else
-    platform -y db:dump $cmd_environment --gzip -f $filename
+    platform -y db:dump ${DDEV_BROOKSDIGITAL_PLATFORMSH_DBPULL_EXTRA} $cmd_environment --gzip -f $filename
   fi
 fi
 
