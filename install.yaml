@@ -41,6 +41,7 @@ pre_install_actions:
       echo "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH set to ${platform_production}"
     fi
 project_files:
+  - brooksdigital/platformsh/.gitignore
   - brooksdigital/platformsh/db-pull.sh
   - brooksdigital/platformsh/push-log.sh
   - brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml

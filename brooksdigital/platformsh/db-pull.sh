@@ -13,7 +13,29 @@ Usage: ${DDEV_BROOKSDIGITAL_HELP_CMD-$0} [options]
 EOM
 )
 
-environment=${DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH-master}
+env_file=/var/www/html/.ddev/brooksdigital/platformsh/.env
+
+if [[ ! -f $env_file ]]; then
+  gum log --level warn "First time running this command, querying platform for defaults..."
+
+  # detect defaults
+  environment=$(gum spin --show-output --title="Detecting production environment" -- platform environments --type=production --pipe)
+  app=$(gum choose --select-if-one --header="Choose default app to pull database from..." $(gum spin --show-output --title="Querying apps..." -- platform apps --format=plain --no-header --columns=name,type | tr '\t' '|') | sed 's/|.*//')
+  relationship=$(gum choose --select-if-one --header="Choose default relationship to pull database from..." $(gum spin --show-output --title="Querying relationships..." -- platform environment:relationships ${1-main} -A drupal | yq '. | to_entries | sort_by(.key) | .[] | .value[0].key = .key | .value | select( .[].service == "db") | .[].key'))
+
+  printf "%s\n" "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH=$environment" "DDEV_BROOKSDIGITAL_PLATFORMSH_DEFAULT_APP=$app" "DDEV_BROOKSDIGITAL_PLATFORMSH_DEFAULT_RELATIONSHIP=$relationship" > $env_file
+else
+  gum log --level debug --structured "Reading defaults from env file" file $env_file
+  . $env_file
+  environment=$DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH
+  app=$DDEV_BROOKSDIGITAL_PLATFORMSH_DEFAULT_APP
+  relationship=$DDEV_BROOKSDIGITAL_PLATFORMSH_DEFAULT_RELATIONSHIP
+fi
+
+gum log --level info Production environment: $environment
+gum log --level info Default App: $app
+gum log --level info Default relationship: $relationship
+
 cmd_environment="-e $environment"
 download=true
 post_import=true
@@ -52,9 +74,9 @@ filename=dump-$environment.sql.gz
 if [[ "$download" == "true"  ]]; then
   echo "Fetching database to $filename..."
   if [[ "$DDEV_PROJECT_TYPE" == *"drupal"* ]] || [[ "$DDEV_BROOKSDIGITAL_PROJECT_TYPE" == *"drupal"* ]]; then
-    platform -y drush ${DDEV_BROOKSDIGITAL_PLATFORMSH_DBPULL_EXTRA} $cmd_environment -- sql-dump --gzip --structure-tables-list=${DDEV_BROOKSDIGITAL_PLATFORMSH_DRUSH_SQL_EXCLUDE-cache*,watchdog,search*} --gzip > $filename
+    platform -y drush -A $app $cmd_environment -- sql-dump --gzip --structure-tables-list=${DDEV_BROOKSDIGITAL_PLATFORMSH_DRUSH_SQL_EXCLUDE-cache*,watchdog,search*} --gzip > $filename
   else
-    platform -y db:dump ${DDEV_BROOKSDIGITAL_PLATFORMSH_DBPULL_EXTRA} $cmd_environment --gzip -f $filename
+    platform -y db:dump -A $app -r $database $cmd_environment --gzip -f $filename
   fi
 fi
 
