@@ -23,23 +23,6 @@ pre_install_actions:
       ddev config --web-environment-add PLATFORM_PROJECT=${platform_project}
       echo "PLATFORM_PROJECT set to ${platform_project}"
     fi
-  # Get DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH from user if we don't have it yet
-  - |
-    if ({{ contains "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH=" (list .DdevProjectConfig.web_environment | toString) }} ); then
-      echo "Using existing DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH from project config.yaml."
-    else
-      printf "\n\nPlease enter your platform.sh production branch (like 'master' or 'main'): "
-    fi
-
-  - |
-    #ddev-description:Set DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH
-    if !( {{ contains "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH" (list .DdevProjectConfig.web_environment | toString) }} ); then
-      read platform_production
-      echo "platform_production = '${platform_production}'"
-      # Put the platform_project in to the project's web environment
-      ddev config --web-environment-add DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH=${platform_production}
-      echo "DDEV_BROOKSDIGITAL_PLATFORMSH_PRODUCTION_BRANCH set to ${platform_production}"
-    fi
 project_files:
   - brooksdigital/platformsh/.ahoy.ifnotpresent.yml
 global_files:
