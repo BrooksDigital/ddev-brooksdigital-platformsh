@@ -1,7 +1,7 @@
 name: brooksdigital-platformsh
 repository: .
 version: ""
-install_date: "2024-03-28T11:47:18-03:00"
+install_date: "2024-03-28T13:14:01-03:00"
 project_files:
     - brooksdigital/platformsh/.ahoy.ifnotpresent.yml
 global_files: []
