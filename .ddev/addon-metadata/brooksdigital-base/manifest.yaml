@@ -1,17 +1,12 @@
 name: brooksdigital-base
 repository: https://github.com/BrooksDigital/ddev-brooksdigital-base/tarball/main
 version: ""
-install_date: "2024-03-26T18:40:23-03:00"
+install_date: "2024-03-28T11:47:17-03:00"
 project_files:
-    - brooksdigital/base/hooks/post-import-db.sh
-    - brooksdigital/base/hooks/post-import-db.d/.gitkeep
-    - brooksdigital/base/hooks/post-import-db.d/drupal.sh
-    - brooksdigital/base/scripts/drupal/drush-uli.sh
     - brooksdigital/base/scripts/drupal/git-deleted-libraries-usage.sh
     - brooksdigital/base/.ahoy.brooksdigital-base.drupal.yml
     - brooksdigital/base/assets/drupal/dev.services.yml
     - brooksdigital/base/assets/drupal/settings.dev.php
     - brooksdigital/base/.ahoy.ifnotpresent.yml
-    - config.brooksdigital-base.yaml
 global_files: []
 removal_actions: []

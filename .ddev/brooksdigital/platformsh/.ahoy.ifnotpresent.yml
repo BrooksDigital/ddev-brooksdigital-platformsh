@@ -17,4 +17,4 @@ commands:
   platform:
     usage: 'Platform commands'
     imports:
-      - .ddev/brooksdigital/platformsh/.ahoy.brooksdigital-platformsh.yml
+      - .ddev/platformsh-lite/.ahoy.platformsh-lite.yml

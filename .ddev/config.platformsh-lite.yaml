@@ -8,7 +8,7 @@ web_environment:
   - PLATFORMSH_CLI_UPDATES_CHECK=0
 hooks:
   pre-start:
-    - exec-host: .ddev/platformsh-lite/check-platformsh-cli-token.sh
+    - exec-host: .ddev/platformsh-lite/scripts/check-platformsh-cli-token.sh
   post-start:
     # Run add-on platform.sh commands to startup
     #
@@ -23,4 +23,4 @@ hooks:
     # For drupal/drush it's recommended to be added after
     # - composer: install
     #
-    - exec: 'bash /var/www/html/.ddev/platformsh-lite/post-start.sh'
+    - exec: /var/www/html/.ddev/platformsh-lite/hooks/post-start.sh
